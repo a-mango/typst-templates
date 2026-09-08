@@ -8,7 +8,7 @@
       row-gutter: 5pt,
       align: (left, right),
       image("logo.svg", height: 20pt), align(horizon, title),
-      grid.cell(colspan: 2)[ #line(length: 100%, stroke: 0.5pt) ]
+      grid.cell(colspan: 2)[ #line(length: 100%, stroke: 0.5pt) ],
     ),
     footer: context [
       #line(length: 100%, stroke: 0.5pt)
@@ -29,13 +29,7 @@
       #link("mailto:" + author.email)
     ]))
 
-  show heading: it => [
-    #set par(
-      leading: 2em,
-      spacing: 1.5em,
-    )
-    #it.body
-  ]
+  show heading: it => it.body
 
   set align(left)
   content

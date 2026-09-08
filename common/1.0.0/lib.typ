@@ -38,16 +38,29 @@
   grid.cell[*ATTENTION*], body,
 )
 
-#let red = content => box(inset: 0.5em, fill: red, text(
-  content,
-  fill: white,
-))
-#let green = content => box(inset: 0.5em, fill: green, text(
-  content,
-  fill: black,
-))
-#let todo = content => box(inset: 0.5em, fill: blue, text(
-  [*TODO*: #content],
-  fill: white,
-))
+#let todo = content => box(
+  inset: 0.5em,
+  fill: blue,
+  text(
+    [*TODO*: #content],
+    fill: white,
+  ),
+)
 
+#let red = content => highlight(
+  fill: rgb("#ff4136"),
+  extent: 2pt,
+  text(fill: white, content),
+)
+
+#let green = content => highlight(
+  fill: green,
+  extent: 2pt,
+  text(fill: white, content),
+)
+
+#let blue = content => highlight(
+  fill: blue,
+  extent: 2pt,
+  text(fill: white, content),
+)

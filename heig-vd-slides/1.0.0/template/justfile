@@ -1,0 +1,40 @@
+# HEIG-VD slides: `just` builds the standard deck, `just all` every variant.
+
+default: light
+
+# Standard light deck
+light:
+    typst compile presentation.typ presentation.pdf
+
+# Dark variant
+dark:
+    typst compile --input mode=dark presentation.typ presentation-dark.pdf
+
+# English variant
+english:
+    typst compile --input lang=en presentation.typ presentation-en.pdf
+
+# Handout: pauses ignored, one page per slide (for sharing)
+handout:
+    typst compile --input handout=true presentation.typ presentation-handout.pdf
+
+# All variants
+all: light dark english handout
+
+# Speaker-notes file for the pdfpc presenter console
+pdfpc: light
+    typst eval 'query(<pdfpc-file>).first().value' --in presentation.typ > presentation.pdfpc
+
+# Live preview
+watch:
+    typst watch presentation.typ
+
+clean:
+    rm -f presentation*.pdf presentation.pdfpc
+
+# Regenerate the `typst init` template from the root presentation.typ
+template:
+    sed 's|#import "theme/lib.typ": \*|#import "@local/heig-vd-slides:1.0.0": *|' presentation.typ > template/presentation.typ
+    sed -i '1s|.*|// HEIG-VD presentation (theme + assets come from the @local/heig-vd-slides package).|' template/presentation.typ
+    sed '/^# --- demo/,$d' justfile > template/justfile
+

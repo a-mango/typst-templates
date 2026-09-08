@@ -1,6 +1,5 @@
 #let conf(title: none, authors: (), date: none, content) = {
   set par(justify: true)
-  show figure: set block(inset: (top: 0.5em, bottom: 1em))
 
   set page(
     header: grid(
