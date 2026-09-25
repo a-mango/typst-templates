@@ -1,0 +1,19 @@
+# HEIG-VD report: this justfile is maintainer tooling only. It keeps the
+# `typst init` scaffolding in template/ in sync with report.typ, and it is not
+# copied into the projects that scaffolding creates.
+#
+# A report is built with `typst compile report.typ`.
+
+default: template
+
+# Regenerate the `typst init` scaffolding from this folder
+template:
+    # Rebuilt from scratch: `typst init` copies whatever sits in template/, so a
+    # stale file left behind there would ship with every new project.
+    # `report.typ` already imports the package by name, so it is copied as is.
+    rm -rf template
+    mkdir -p template/assets
+    cp report.typ template/report.typ
+    # `typst init` does copy an empty directory, but git does not track one, so
+    # this placeholder is what carries assets/ through a clone.
+    touch template/assets/.gitkeep

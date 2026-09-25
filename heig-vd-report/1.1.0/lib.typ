@@ -1,4 +1,45 @@
-#let conf(title: none, subtitle: none, authors: (), date: none, content) = {
+// HEIG-VD course report.
+//
+// Pick the language with the `lang` parameter of `#conf`. It sets the text
+// language Typst itself works in, which drives hyphenation, quotation marks and
+// its own supplements (`Tableau`/`Table`, `Figure`), and it picks the fixed
+// strings below.
+
+// Fixed strings, one table per language the template can be set to.
+#let report-labels = (
+  fr: (page: "1 sur 1"),
+  en: (page: "1 of 1"),
+)
+
+/// Lay out a report.
+///
+/// - title (content, str, none): shown on the title block and in the header.
+/// - subtitle (content, str, none): line under the title.
+/// - authors (dictionary, array): one author, or an array of them. Each is a
+///   dictionary with a `name`, an `affiliation` and an `email`.
+/// - date (content, str, none): shown in the page footer.
+/// - lang (str): "fr" or "en"; sets the text language and the fixed strings.
+#let conf(
+  title: none,
+  subtitle: none,
+  authors: (),
+  date: none,
+  lang: "fr",
+  content,
+) = {
+  // A typo would otherwise pass silently and leave the document in the wrong
+  // language.
+  assert(
+    lang in report-labels,
+    message: "unknown language \"" + lang + "\", expected one of ("
+      + report-labels.keys().join(", ") + ")",
+  )
+  let labels = report-labels.at(lang)
+
+  // Before `set page`: the header and the footer inherit the text styles in
+  // effect where the page is set up, so a later `set text` would leave them
+  // hyphenating and quoting in the wrong language.
+  set text(lang: lang)
   set par(justify: true)
 
   set page(
@@ -13,7 +54,7 @@
       #line(length: 100%, stroke: 0.5pt)
       #date
       #h(1fr)
-      Page #counter(page).display("1 sur 1", both: true)
+      Page #counter(page).display(labels.page, both: true)
     ],
   )
 
