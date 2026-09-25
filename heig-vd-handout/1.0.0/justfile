@@ -1,0 +1,76 @@
+# HEIG-VD practical work handout: `just` builds the student version,
+# `just solutions` the version with the answers.
+
+default: student
+
+# Student version: `#answer[…]` blocks are dropped (this is the one you hand out)
+student:
+    typst compile handout.typ handout.pdf
+
+# Teacher version: `#answer[…]` blocks are rendered, header stamped CORRIGÉ
+solutions:
+    typst compile --input solutions=true handout.typ handout-solutions.pdf
+
+# Both variants
+all: student solutions
+
+# Live preview of the student version
+watch:
+    typst watch handout.typ
+
+# Live preview of the version with the answers
+watch-solutions:
+    typst watch --input solutions=true handout.typ handout-solutions.pdf
+
+# Safety net before handing the PDF out (needs poppler-utils)
+check:
+    #!/usr/bin/env bash
+    # Inspects the PDF sitting on disk without rebuilding it, so a stale or
+    # hand-built file is caught too. `just verify` rebuilds first.
+    set -euo pipefail
+    student=handout.pdf
+    teacher=handout-solutions.pdf
+    if [ ! -f "$student" ]; then
+        echo "$student is missing — run \`just all\` first" >&2
+        exit 1
+    fi
+    # Read first, match second: `grep -q` closes the pipe on its first hit, and
+    # under `pipefail` the SIGPIPE it sends back would turn a match into a
+    # non-zero pipeline, i.e. read as "no banner" on a long handout.
+    cover=$(pdftotext -f 1 -l 1 "$student" -)
+    # The solutions build stamps its banner on a line of its own on the title
+    # page; prose mentioning "le corrigé" sits inside a longer line and does
+    # not match.
+    if grep -qxE '[[:space:]]*(CORRIGÉ|SOLUTIONS)[[:space:]]*' <<<"$cover"; then
+        echo "$student carries the solutions banner: it holds the answers" >&2
+        exit 1
+    fi
+    s=$(pdftotext "$student" - | wc -c)
+    echo -n "ok: $student carries no banner ($s chars"
+    if [ -f "$teacher" ]; then
+        t=$(pdftotext "$teacher" - | wc -c)
+        echo ", against $t in the solutions)"
+        # Informational only: equal sizes are normal while the answers are unwritten.
+        if [ "$s" -ge "$t" ]; then
+            echo "note: $student holds as much text as $teacher — no #answer block has any content yet?" >&2
+        fi
+    else
+        echo ")"
+    fi
+
+# Rebuild both, then check
+verify: all check
+
+clean:
+    rm -f handout.pdf handout-solutions.pdf
+
+# --- packaging (stripped from the `typst init` scaffolding) ------------------
+# Regenerate the `typst init` scaffolding from this folder
+template:
+    # Rebuilt from scratch: `typst init` copies whatever sits in template/, so a
+    # stale build artifact left behind there would ship with every new project.
+    # `handout.typ` already imports the package by name, so it is copied as is.
+    rm -rf template
+    mkdir -p template
+    cp handout.typ template/handout.typ
+    sed '/^# --- packaging/,$d' justfile > template/justfile
