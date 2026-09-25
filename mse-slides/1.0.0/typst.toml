@@ -1,0 +1,18 @@
+[package]
+name = "mse-slides"
+version = "1.0.0"
+compiler = "0.15.0"
+entrypoint = "theme/lib.typ"
+authors = ["Aubry Mangold <aubry.mangold@master.hes-so.ch>"]
+license = "MIT-0"
+description = "Presentation template for HES-SO MSE courses (Touying-based)"
+repository = "https://github.com/a-mango/typst-templates"
+keywords = ["presentation", "slides", "touying", "mse", "hes-so", "master"]
+categories = ["presentation"]
+# Build artefacts and the demo PDF do not belong in a published package.
+exclude = ["demo.pdf", "presentation.pdf", "presentation.pdfpc"]
+
+[template]
+path = "template"
+entrypoint = "presentation.typ"
+thumbnail = "thumbnail.png"
