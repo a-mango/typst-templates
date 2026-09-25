@@ -1,0 +1,17 @@
+[package]
+name = "heig-vd-summary"
+version = "1.2.0"
+compiler = "0.15.0"
+entrypoint = "lib.typ"
+authors = ["Aubry Mangold <aubry.mangold@heig-vd.ch>"]
+license = "MIT-0"
+description = "Lesson summary template for HEIG-VD courses"
+repository = "https://github.com/a-mango/typst-templates"
+keywords = ["summary", "heig-vd", "hes-so"]
+categories = ["paper"]
+# Build artifacts do not belong in a published package.
+exclude = ["summary.pdf"]
+
+[template]
+path = "template"
+entrypoint = "summary.typ"
