@@ -1,0 +1,17 @@
+[package]
+name = "hes-so-report"
+version = "1.0.0"
+compiler = "0.15.0"
+entrypoint = "lib.typ"
+authors = ["Aubry Mangold <aubry.mangold@hes-so.ch>"]
+license = "MIT-0"
+description = "Report template for HES-SO courses"
+repository = "https://github.com/a-mango/typst-templates"
+keywords = ["report", "hes-so"]
+categories = ["paper"]
+# Build artifacts do not belong in a published package.
+exclude = ["report.pdf"]
+
+[template]
+path = "template"
+entrypoint = "report.typ"
