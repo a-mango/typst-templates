@@ -1,0 +1,17 @@
+[package]
+name = "mse-report"
+version = "1.0.0"
+compiler = "0.15.0"
+entrypoint = "lib.typ"
+authors = ["Aubry Mangold <aubry.mangold@master.hes-so.ch>"]
+license = "MIT-0"
+description = "Report template for HES-SO MSE courses"
+repository = "https://github.com/a-mango/typst-templates"
+keywords = ["report", "mse", "hes-so", "master"]
+categories = ["paper"]
+# Build artifacts do not belong in a published package.
+exclude = ["report.pdf"]
+
+[template]
+path = "template"
+entrypoint = "report.typ"
