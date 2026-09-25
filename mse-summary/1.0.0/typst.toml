@@ -1,0 +1,17 @@
+[package]
+name = "mse-summary"
+version = "1.0.0"
+compiler = "0.15.0"
+entrypoint = "lib.typ"
+authors = ["Aubry Mangold <aubry.mangold@master.hes-so.ch>"]
+license = "MIT-0"
+description = "Lesson summary template for HES-SO MSE courses"
+repository = "https://github.com/a-mango/typst-templates"
+keywords = ["summary", "mse", "hes-so", "master"]
+categories = ["paper"]
+# Build artifacts do not belong in a published package.
+exclude = ["summary.pdf"]
+
+[template]
+path = "template"
+entrypoint = "summary.typ"

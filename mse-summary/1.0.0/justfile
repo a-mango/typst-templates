@@ -1,0 +1,19 @@
+# HES-SO MSE summary: this justfile is maintainer tooling only. It keeps the
+# `typst init` scaffolding in template/ in sync with summary.typ, and it is not
+# copied into the projects that scaffolding creates.
+#
+# A summary is built with `typst compile summary.typ`.
+
+default: template
+
+# Regenerate the `typst init` scaffolding from this folder
+template:
+    # Rebuilt from scratch: `typst init` copies whatever sits in template/, so a
+    # stale file left behind there would ship with every new project.
+    # `summary.typ` already imports the package by name, so it is copied as is.
+    rm -rf template
+    mkdir -p template/assets
+    cp summary.typ template/summary.typ
+    # `typst init` does copy an empty directory, but git does not track one, so
+    # this placeholder is what carries assets/ through a clone.
+    touch template/assets/.gitkeep
