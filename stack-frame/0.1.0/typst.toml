@@ -1,0 +1,9 @@
+[package]
+name = "stack-frame"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["acm"]
+license = "MIT"
+description = "A library for visualizing computer memory stack frames, heaps, and pointers."
+repository = "https://github.com/a-mango/stack-frame"
+keywords = ["stack", "memory", "diagram", "cs", "computer-science"]
