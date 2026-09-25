@@ -1,0 +1,19 @@
+# HES-SO notes: this justfile is maintainer tooling only. It keeps the
+# `typst init` scaffolding in template/ in sync with notes.typ, and it is not
+# copied into the projects that scaffolding creates.
+#
+# Notes are built with `typst compile notes.typ`.
+
+default: template
+
+# Regenerate the `typst init` scaffolding from this folder
+template:
+    # Rebuilt from scratch: `typst init` copies whatever sits in template/, so a
+    # stale file left behind there would ship with every new project.
+    # `notes.typ` already imports the package by name, so it is copied as is.
+    rm -rf template
+    mkdir -p template/assets
+    cp notes.typ template/notes.typ
+    # `typst init` does copy an empty directory, but git does not track one, so
+    # this placeholder is what carries assets/ through a clone.
+    touch template/assets/.gitkeep

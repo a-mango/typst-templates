@@ -1,0 +1,17 @@
+[package]
+name = "hes-so-notes"
+version = "1.0.0"
+compiler = "0.15.0"
+entrypoint = "lib.typ"
+authors = ["Aubry Mangold <aubry.mangold@hes-so.ch>"]
+license = "MIT-0"
+description = "Personal notes templates for HES-SO courses"
+repository = "https://github.com/a-mango/typst-templates"
+keywords = ["notes", "hes-so"]
+categories = ["paper"]
+# Build artifacts do not belong in a published package.
+exclude = ["notes.pdf"]
+
+[template]
+path = "template"
+entrypoint = "notes.typ"
