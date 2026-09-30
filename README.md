@@ -32,12 +32,6 @@ That symlinks every package into Typst's local package directory, so edits in
 this checkout take effect immediately. Every version is installed since older
 documents pin the version they were written against.
 
-To copy the packages instead, leaving no dependency on this repository, run:
-
-```bash
-just install
-```
-
 Other recipes: `just status` shows what the namespace holds, `just verify`
 compiles a probe against each package to prove Typst resolves it, `just
 uninstall` removes them again, and `just list` and `just check` inspect the
